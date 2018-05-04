@@ -1,6 +1,7 @@
 from flask import abort, request, send_from_directory
 from app import app
 from app import variable1
+from app import dir_name
 import json
 
 @app.route('/')
@@ -22,7 +23,6 @@ def post():
 def axiom_badge():
     global variable1
     
-    dir_name = "/Users/brian.xu/Desktop/project_badges/badges/"
     file_name = "badge_00.png"
 
     full_path = dir_name + file_name
@@ -34,10 +34,12 @@ def axiom_badge():
         variable1 = 1
         return "refresh again to see sticker."
 
-@app.route('/laptop')
-def laptop():
+@app.route('/qq')
+def qq():
 
-    return "laptop"
+    file_name = "QQ QR - Bubbles.png"
+    
+    return send_from_directory(dir_name, file_name)
 
 @app.route('/banana')
 def banana():

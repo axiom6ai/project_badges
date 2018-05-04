@@ -3,6 +3,7 @@ from flask import Flask
 app = Flask(__name__)
 
 variable1 = 0
+dir_name = "/Users/brian.xu/Desktop/project_badges/badges/"
 
 from app import routes
 
