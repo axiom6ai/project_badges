@@ -1,7 +1,7 @@
 # project_badges
 this is a server that will return images.
 
-__before running:__
+##__before running:__
 
 [i] open '__ init __.py' in your text editor.
 ![l](https://user-images.githubusercontent.com/35032810/39611688-3155bb16-4f8c-11e8-8ffd-c8496720ed57.png)
@@ -11,7 +11,7 @@ __before running:__
 the correct path is necessary to see images in your browser.
 
 
-__to run:__
+##__to run:__
 
 [1] navigate to 'hellotest' directory in terminal 
 
