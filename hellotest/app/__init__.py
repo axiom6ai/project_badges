@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 variable1 = 0
 dir_name = "/Users/brian.xu/Desktop/project_badges/badges/"
+numberofclicks = [0,0,0,0,0]
 
 from app import routes
 

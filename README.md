@@ -28,14 +28,14 @@ you should see something like
 which indicates that that the server is running on localhost on port 3000.
 
 
-[4] you can then visit `localhost:3000/badges` in your browser to not receive an image, unless you refresh, in which case images will be fed and then denied again, alternating every refresh.
+[4] you can then visit `localhost:3000/badges` in your browser to not receive an image, unless you refresh, in which case images will be fed and then denied again, changing every refresh.
 ![ll](https://user-images.githubusercontent.com/35032810/39610948-61474d18-4f86-11e8-883c-7886443ec094.png)
 
 this is what you will see if you are successful.
 
 ![lll](https://user-images.githubusercontent.com/35032810/39611085-5c205a54-4f87-11e8-94a3-fd4ab708bb45.png)
 
-if you are not interested, visit `localhost:3000/shanghai` to be given the information that the weather sucks, regardless of what the weather is actually like.
+if you are not interested, visit `localhost:3000/shanghai` to be given the information that the weather sucks, regardless of what the weather is actually like or any of the other endpoints in 'routes.py' for their respective images.
 
 
 
