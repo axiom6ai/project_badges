@@ -32,7 +32,7 @@ def axiom_badge():
         return send_from_directory(dir_name, file_name)
     else:
         variable1 = 1
-        return "no sticker for you."
+        return "refresh again to see sticker."
 
 @app.route('/laptop')
 def laptop():
