@@ -1,8 +1,8 @@
 from flask import abort, request, send_from_directory
 from app import app
 from app import variable1, dir_name, file_names, numberofclicks
-from app import json_axiom, axiom_key
-from app import json_dates, sticker_counts, sticker_counts_daily
+from app import json_sticker_dates, sticker_counts_total, sticker_counts_daily
+from app import json_stickers
 import json, datetime
 
 @app.route('/')
@@ -38,24 +38,24 @@ def axiom_badge():
         variable1 = 1
         return "refresh again to see sticker."
 
-@app.route('/qq')
-def qq():
+@app.route('/sticker00')
+def sticker00():
     global numberofclicks
     numberofclicks[0] = numberofclicks[0] + 1
 
     file_name = file_names[0]
 
-    global json_dates
-    global sticker_counts
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
+    sticker_dates = json.loads(json_sticker_dates)
 	
-    if str(datetime.date.today()) in dates:
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
@@ -63,27 +63,54 @@ def qq():
                                                 'sticker_04':0,
                                                 'sticker_05':0
                                             }
-    sticker_counts[0] = sticker_counts[0] + 1
+    sticker_counts_total[0] = sticker_counts_total[0] + 1
     sticker_counts_daily[0] = sticker_counts_daily[0] + 1
 
-    dates[str(datetime.date.today())]['sticker_00'] = sticker_counts_daily[0]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_00'] = sticker_counts_daily[0]
+    json_sticker_dates = json.dumps(sticker_dates)
+
+    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/dates.txt', 'w') as file:
+        file.write(json_sticker_dates)
+        file.close()
+
+    global json_stickers
+
+    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'r') as file:
+        stickers = json.load(file)
+
+    if 'sticker00' in stickers:
+        None
+    else:
+        stickers['sticker00'] = {}
+        stickers['sticker00'][str(datetime.date.today())] = {}
+
+    stickers['sticker00'][str(datetime.date.today())] = str(datetime.datetime.now().strftime('%H:%M:%S'))
+    json_stickers = json.dumps(stickers)
+
+    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'w') as file:
+        file.write(json_stickers)
+        file.close()
 
     return send_from_directory(dir_name, file_name)
 
-@app.route('/axiom')
-def axiom():
-    global json_dates
-    global sticker_counts
+@app.route('/sticker01')
+def sticker01():
+    global numberofclicks
+    numberofclicks[1] = numberofclicks[1] + 1
+
+    file_name = file_names[1]
+
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
+    sticker_dates = json.loads(json_sticker_dates)
 	
-    if str(datetime.date.today()) in dates:
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
@@ -91,32 +118,32 @@ def axiom():
                                                 'sticker_04':0,
                                                 'sticker_05':0
                                             }
-    sticker_counts[1] = sticker_counts[1] + 1
+    sticker_counts_total[1] = sticker_counts_total[1] + 1
     sticker_counts_daily[1] = sticker_counts_daily[1] + 1
 
-    dates[str(datetime.date.today())]['sticker_01'] = sticker_counts_daily[1]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_01'] = sticker_counts_daily[1]
+    json_sticker_dates = json.dumps(sticker_dates)
 
     return send_from_directory(dir_name, file_name)
 
-@app.route('/wechat')
-def third():
+@app.route('/sticker02')
+def sticker02():
     global numberofclicks
     numberofclicks[2] = numberofclicks[2] + 1
 
     file_name = file_names[2]
 
-    global json_dates
-    global sticker_counts
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
-	
-    if str(datetime.date.today()) in dates:
+    sticker_dates = json.loads(json_sticker_dates)
+    
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
@@ -124,65 +151,65 @@ def third():
                                                 'sticker_04':0,
                                                 'sticker_05':0
                                             }
-    sticker_counts[2] = sticker_counts[2] + 1
+    sticker_counts_total[2] = sticker_counts_total[2] + 1
     sticker_counts_daily[2] = sticker_counts_daily[2] + 1
 
-    dates[str(datetime.date.today())]['sticker_02'] = sticker_counts_daily[2]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_02'] = sticker_counts_daily[2]
+    json_sticker_dates = json.dumps(sticker_dates)
 
     return send_from_directory(dir_name, file_name)
 
-@app.route('/seal')
-def seal():
+@app.route('/sticker03')
+def sticker03():
     global numberofclicks
     numberofclicks[3] = numberofclicks[3] + 1
 
     file_name = file_names[3]
 
-    global json_dates
-    global sticker_counts
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
-	
-    if str(datetime.date.today()) in dates:
+    sticker_dates = json.loads(json_sticker_dates)
+    
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
                                                 'sticker_03':0,
                                                 'sticker_04':0,
                                                 'sticker_05':0
-                                            }   
-    sticker_counts[3] = sticker_counts[3] + 1
+                                            }
+    sticker_counts_total[3] = sticker_counts_total[3] + 1
     sticker_counts_daily[3] = sticker_counts_daily[3] + 1
 
-    dates[str(datetime.date.today())]['sticker_03'] = sticker_counts_daily[3]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_03'] = sticker_counts_daily[3]
+    json_sticker_dates = json.dumps(sticker_dates)
 
     return send_from_directory(dir_name, file_name)
 
-@app.route('/typo')
-def typo():
+@app.route('/sticker04')
+def sticker04():
     global numberofclicks
     numberofclicks[4] = numberofclicks[4] + 1
 
     file_name = file_names[4]
-
-    global json_dates
-    global sticker_counts
+   
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
-	
-    if str(datetime.date.today()) in dates:
+    sticker_dates = json.loads(json_sticker_dates)
+    
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
@@ -190,30 +217,30 @@ def typo():
                                                 'sticker_04':0,
                                                 'sticker_05':0
                                             }
-    sticker_counts[4] = sticker_counts[4] + 1
+    sticker_counts_total[4] = sticker_counts_total[4] + 1
     sticker_counts_daily[4] = sticker_counts_daily[4] + 1
 
-    dates[str(datetime.date.today())]['sticker_04'] = sticker_counts_daily[4]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_04'] = sticker_counts_daily[4]
+    json_sticker_dates = json.dumps(sticker_dates)
 
     return send_from_directory(dir_name, file_name)
 
-@app.route('/sleepy')
+@app.route('/sticker05')
 def sleepy():
     global numberofclicks
     file_name = file_names[5]
 
-    global json_dates
-    global sticker_counts
+    global json_sticker_dates
+    global sticker_counts_total
     global sticker_counts_daily
 
-    dates = json.loads(json_dates)
-	
-    if str(datetime.date.today()) in dates:
+    sticker_dates = json.loads(json_sticker_dates)
+    
+    if str(datetime.date.today()) in sticker_dates:
         None
     else:
         sticker_counts_daily = [0,0,0,0,0,0]
-        dates[str(datetime.date.today())] = {
+        sticker_dates[str(datetime.date.today())] = {
                                                 'sticker_00':0,
                                                 'sticker_01':0,
                                                 'sticker_02':0,
@@ -221,11 +248,11 @@ def sleepy():
                                                 'sticker_04':0,
                                                 'sticker_05':0
                                             }
-    sticker_counts[5] = sticker_counts[5] + 1
+    sticker_counts_total[5] = sticker_counts_total[5] + 1
     sticker_counts_daily[5] = sticker_counts_daily[5] + 1
 
-    dates[str(datetime.date.today())]['sticker_05'] = sticker_counts_daily[5]
-    json_dates = json.dumps(dates)
+    sticker_dates[str(datetime.date.today())]['sticker_05'] = sticker_counts_daily[5]
+    json_sticker_dates = json.dumps(sticker_dates)
 
     if numberofclicks[0] > 0:
         numberofclicks[5] = numberofclicks[5] + 1
@@ -249,13 +276,11 @@ def test():
 
 @app.route('/datetest')
 def date():
-    return json_axiom
+    return "hi"
 
 @app.route('/dates')
 def dates():
-
-	return json_dates
-
+    return json_sticker_dates
 
 @app.route('/print')
 def print():

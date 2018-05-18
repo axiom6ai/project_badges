@@ -1,22 +1,27 @@
 from flask import Flask
-import json
+import json, os
 
 app = Flask(__name__)
 
 variable1 = 0
-dir_name = "/Users/brian.xu/Desktop/project_badges/badges/"
-file_names = ["QQ QR - Bubbles.png","Logo - Circle Crop.png","WeChat QR - Bubbles.png","Seal.png","Typography Two Tone.png","sleepy.jpg"]
+dir_name = '/Users/brian.xu/Desktop/project_badges/badges/'
+file_names = ["sticker_00.png","sticker_01.png","sticker_02.png","sticker_03.png","sticker_04.png","sticker_05.png"]
 numberofclicks = [0,0,0,0,0,0]
 
-axiom = {}
-axiom['axiom_date'] = {}
-json_axiom = json.dumps(axiom)
-axiom_key = 0
-
-dates = {}
-json_dates = json.dumps(dates)
-sticker_counts = [0,0,0,0,0,0]
+sticker_dates = {}
+json_sticker_dates = json.dumps(sticker_dates)
+sticker_counts_total = [0,0,0,0,0,0]
 sticker_counts_daily = [0,0,0,0,0,0]
+
+stickers = {}
+json_stickers = json.dumps(stickers)
+
+if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata'):
+    os.makedirs('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata')
+if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt'):
+	file = open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'w')
+	file.write('{}')
+	file.close()
 
 from app import routes
 

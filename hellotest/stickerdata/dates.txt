@@ -1,0 +1,1 @@
+{"2018-05-18": {"sticker_00": 2, "sticker_01": 0, "sticker_02": 0, "sticker_03": 0, "sticker_04": 0, "sticker_05": 0}}
