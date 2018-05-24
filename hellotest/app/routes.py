@@ -2,7 +2,7 @@ from flask import abort, request, send_from_directory
 from app import app
 from app import variable1, dir_name, file_names, numberofclicks
 from app import json_sticker_dates, sticker_counts_total, sticker_counts_daily
-from app import json_stickers
+from app import stickerstxt, latest
 import json, datetime
 
 @app.route('/')
@@ -73,22 +73,27 @@ def sticker00():
         file.write(json_sticker_dates)
         file.close()
 
-    global json_stickers
-
-    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'r') as file:
+    #stickers.txt
+    with open(stickerstxt, 'r') as file:
         stickers = json.load(file)
+
+    global latest
+    today = str(datetime.datetime.now().strftime('%m%d%y'))
+    currenttime = str(datetime.datetime.now().strftime('%H:%M:%S'))
 
     if 'sticker00' in stickers:
         None
     else:
-        stickers['sticker00'] = {}
-        stickers['sticker00'][str(datetime.date.today())] = {}
+        stickers['sticker00'] = []
 
-    stickers['sticker00'][str(datetime.date.today())] = str(datetime.datetime.now().strftime('%H:%M:%S'))
-    json_stickers = json.dumps(stickers)
+    if not latest == today:
+        stickers['sticker00'].append({})
+        stickers['sticker00'][-1][today] = []
+        latest = today
+    stickers['sticker00'][-1][today].append(currenttime)
 
-    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'w') as file:
-        file.write(json_stickers)
+    with open(stickerstxt, 'w') as file:
+        file.write(json.dumps(stickers))
         file.close()
 
     return send_from_directory(dir_name, file_name)

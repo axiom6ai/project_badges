@@ -13,16 +13,14 @@ json_sticker_dates = json.dumps(sticker_dates)
 sticker_counts_total = [0,0,0,0,0,0]
 sticker_counts_daily = [0,0,0,0,0,0]
 
-stickers = {}
-json_stickers = json.dumps(stickers)
-
 if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata'):
     os.makedirs('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata')
 if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt'):
 	file = open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt', 'w')
 	file.write('{}')
 	file.close()
-
+stickerstxt = '/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt'
+latest = ""
 from app import routes
 
 app.run(host='127.0.0.1', port=3000, debug=True)
