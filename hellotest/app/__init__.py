@@ -1,11 +1,15 @@
 from flask import Flask
-import json, os
+import json, os, glob
 
 app = Flask(__name__)
 
 variable1 = 0
 dir_name = '/Users/brian.xu/Desktop/project_badges/badges/'
-file_names = ["sticker_00.png","sticker_01.png","sticker_02.png","sticker_03.png","sticker_04.png","sticker_05.png"]
+file_names = []
+glob = glob.glob(os.path.join(dir_name, '*'))
+for file in glob:
+	file_names.append(os.path.basename(file))
+
 numberofclicks = [0,0,0,0,0,0]
 
 sticker_dates = {}
@@ -20,7 +24,8 @@ if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerd
 	file.write('{}')
 	file.close()
 stickerstxt = '/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt'
-latest = ""
+
+
 from app import routes
 
 app.run(host='127.0.0.1', port=3000, debug=True)

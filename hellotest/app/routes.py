@@ -2,8 +2,8 @@ from flask import abort, request, send_from_directory
 from app import app
 from app import variable1, dir_name, file_names, numberofclicks
 from app import json_sticker_dates, sticker_counts_total, sticker_counts_daily
-from app import stickerstxt, latest
-import json, datetime
+from app import stickerstxt
+import json, datetime, os
 
 @app.route('/')
 def index():
@@ -73,28 +73,8 @@ def sticker00():
         file.write(json_sticker_dates)
         file.close()
 
-    #stickers.txt
-    with open(stickerstxt, 'r') as file:
-        stickers = json.load(file)
-
-    global latest
-    today = str(datetime.datetime.now().strftime('%m%d%y'))
-    currenttime = str(datetime.datetime.now().strftime('%H:%M:%S'))
-
-    if 'sticker00' in stickers:
-        None
-    else:
-        stickers['sticker00'] = []
-
-    if not latest == today:
-        stickers['sticker00'].append({})
-        stickers['sticker00'][-1][today] = []
-        latest = today
-    stickers['sticker00'][-1][today].append(currenttime)
-
-    with open(stickerstxt, 'w') as file:
-        file.write(json.dumps(stickers))
-        file.close()
+    stickername = os.path.splitext(os.path.basename(dir_name + file_names[0]))[0]
+    updatestickertxt(stickername)
 
     return send_from_directory(dir_name, file_name)
 
@@ -128,6 +108,9 @@ def sticker01():
 
     sticker_dates[str(datetime.date.today())]['sticker_01'] = sticker_counts_daily[1]
     json_sticker_dates = json.dumps(sticker_dates)
+
+    stickername = os.path.splitext(os.path.basename(dir_name + file_names[1]))[0]
+    updatestickertxt(stickername)
 
     return send_from_directory(dir_name, file_name)
 
@@ -281,7 +264,14 @@ def test():
 
 @app.route('/datetest')
 def date():
-    return "hi"
+    import glob
+    clist = []
+    for f in glob.glob(os.path.join(dir_name, '*')):
+        f = os.path.basename(f)
+        clist.append(f)
+
+    
+    return str(clist)
 
 @app.route('/dates')
 def dates():
@@ -300,4 +290,33 @@ def printing():
             return send_from_directory(dir_name, file_names[n])
 
     return "list"
+
+def updatestickertxt(stickername):
+    #stickers.txt
+    with open(stickerstxt, 'r') as file:
+        stickers = json.load(file)
+
+    today = str(datetime.datetime.now().strftime('%m%d%y'))
+    currenttime = str(datetime.datetime.now().strftime('%H:%M:%S'))
+
+    os.path.splitext(os.path.basename(dir_name + file_names[0]))[0]
+
+    if stickername in stickers:
+        None
+    else:
+        stickers[stickername] = []
+        stickers[stickername].append({})
+        stickers[stickername][-1][today] = []
+
+    if today in stickers[stickername][-1]:
+        None
+    else:
+        stickers[stickername].append({})
+        stickers[stickername][-1][today] = []
+    stickers[stickername][-1][today].append(currenttime)
+
+    with open(stickerstxt, 'w') as file:
+        file.write(json.dumps(stickers))
+        file.close()
+
 
