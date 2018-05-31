@@ -23,6 +23,10 @@ if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerd
 	file.close()
 datestxt = '/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/dates.txt'
 stickerstxt = '/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.txt'
+if not os.path.exists('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.csv'):
+	file = open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.csv', 'w')
+	file.close()
+stickerscsv = '/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.csv'
 
 from app import routes
 
