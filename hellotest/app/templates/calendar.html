@@ -1,17 +1,91 @@
 <!doctype html>
 <html>
-<table border="0" cellpadding="0" cellspacing="0" class="month">
-<tr><th colspan="7" class="month">October 2018</th></tr>
-<tr><th class="sun">Sun</th><th class="mon">Mon</th><th class="tue">Tue</th><th class="wed">Wed</th><th class="thu">Thu</th><th class="fri">Fri</th><th class="sat">Sat</th></tr>
+<head>
+
+<style>
+body {font-family: Verdana, sans-serif;}
+
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #1abc9c;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background: #ddd;
+    text-align: center;
+    width: 14.3%;
+    color: #666;
+}
+
+.days {
+	padding: 10px 0;
+    background: #eee;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:12px;
+    color: #777;
+}
+
+.days .active {
+	padding: 5px;
+    background: #1abc9c;
+    color: white
+}
+
+.days .highlighted {
+    padding: 5px;
+    background: #ddd;
+}
+
+.button {
+	width: 15px;
+    height: 15px;
+	padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+</style>
+</head>
+
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width: 60%; border-color: #666;">
+<tr><th colspan="7" class="month">{{ months[date.month-1] }} {{ date.year }}</th></tr>
+<tr>
+{% for weekday in weekdays %}
+	<td class="weekdays">{{ weekday }}</td>
+{% endfor %}
+</tr>
 {% for week in month %}
 	<tr>
 	{% for day in week %}
+		<td class="days">
 		{% if day[0] == 0 %}
-			<td class="noday">&nbsp;</td>
+			&nbsp;
+		{% elif day[0] in test %}
+			<span class="highlighted"><button class="button">{{ day[0] }}</button></span>
+		{% elif day[0] != date.day %}
+			<button class="button">{{ day[0] }}</button>
 		{% else %}
-			<td class="{{ weekdays[day[1]] }}" style="text-align: center;"><button style="padding:20px; height: 20px; width: 20px; line-height: 0px; ">{{ day[0] }}</button></td>
+			<span class="active"><button class="button">{{ day[0] }}</button></span>
 		{% endif %}
+		</td>
 	{% endfor %}
+	</tr>
 {% endfor %}
 </table>
+
+</body>
 </html>

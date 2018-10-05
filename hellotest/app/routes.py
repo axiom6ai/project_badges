@@ -76,14 +76,25 @@ def allstickers():
 
 @app.route('/calendar')
 def calendartest():
+    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/stickers.csv', 'r') as file:
+        stickers = list(csv.reader(file))
+    test = []
 
-    weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+    for row in stickers:
+        if len(row[0]) > 1:
+            test.append(int(row[0][3:4]))
+    print(test)
+
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+    date = datetime.date(2018, 6, 10)
 
     c =  calendar.Calendar(firstweekday=6)
-    month = c.monthdays2calendar(2018, 10)
+    month = c.monthdays2calendar(date.year, date.month)
     
     #return str(month)
-    return render_template('calendar.html', month=month, weekdays=weekdays)
+    return render_template('calendar.html', month=month, weekdays=weekdays, months=months, date=date, test=test)
 
 ####TESTING_SECTION####
 @app.route('/test')
