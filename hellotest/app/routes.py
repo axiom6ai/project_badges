@@ -1,22 +1,27 @@
-from flask import abort, request, send_from_directory
+from flask import abort, request, send_from_directory, render_template
 from app import app
 from app import dir_name, file_names, sticker_names, file_paths
 from app import numberof_clicks, stickerstxt, datestxt, stickerscsv, summarycsv
 import json, datetime, os, csv
+import calendar
 
 @app.route('/sticker00')
 def sticker00():
-    file_name = file_names[0]
-    updatetxts(file_name)
+    if datetime.datetime.today().weekday() > 4:
+        file_name = file_names[0]
+        updatetxts(file_name)
 
-    return send_from_directory(dir_name, file_name)
+        return send_from_directory(dir_name, file_name)
+    return "not available"
 
 @app.route('/sticker01')
 def sticker01():
-    file_name = file_names[1]
-    updatetxts(file_name)
+    if datetime.datetime.today().weekday() < 5:
+        file_name = file_names[1]
+        updatetxts(file_name)
 
-    return send_from_directory(dir_name, file_name)
+        return send_from_directory(dir_name, file_name)
+    return "not available"
 
 @app.route('/sticker02')
 def sticker02():
@@ -46,8 +51,39 @@ def sleepy():
         updatetxts(file_name)
 
         return send_from_directory(dir_name, file_name)
-    else:
-        return "not available"
+    return "not available"
+
+@app.route('/allstickers')
+def allstickers():
+    with open('/Users/brian.xu/desktop/project_badges/hellotest/stickerdata/summary.csv', 'r') as file:
+        summary = list(csv.reader(file))
+
+    githubstickers = [
+                    "https://user-images.githubusercontent.com/35032810/46395675-c0f51180-c71f-11e8-9950-0f99fed91e1c.png",
+                    "https://user-images.githubusercontent.com/35032810/46395685-c6525c00-c71f-11e8-842e-b2625876dbcb.png",
+                    "https://user-images.githubusercontent.com/35032810/46395686-c6525c00-c71f-11e8-86c4-ed9d8ac11217.png",
+                    "https://user-images.githubusercontent.com/35032810/46395687-c7838900-c71f-11e8-9365-ff58ee1f4890.png",
+                    "https://user-images.githubusercontent.com/35032810/46395690-c81c1f80-c71f-11e8-8d70-5d58203e00c2.png",
+                    "https://user-images.githubusercontent.com/35032810/46395692-c8b4b600-c71f-11e8-8a9b-29703484c928.png"
+                    ]
+    unlocked = []
+
+    for i in range(1, len(summary[1])):
+        if int(summary[1][i]) > 0:
+            unlocked.append((githubstickers[i-1], summary[1][i]))
+                
+    return render_template('test.html', unlocked=unlocked)
+
+@app.route('/calendar')
+def calendartest():
+
+    weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+
+    c =  calendar.Calendar(firstweekday=6)
+    month = c.monthdays2calendar(2018, 10)
+    
+    #return str(month)
+    return render_template('calendar.html', month=month, weekdays=weekdays)
 
 ####TESTING_SECTION####
 @app.route('/test')

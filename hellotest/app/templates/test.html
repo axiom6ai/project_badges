@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+	{% for image in unlocked %}
+	<p><img src="{{ image[0] }}" height=100>
+	<button><font size="7"><b>{{ image[1] }}</b></font></button></p>
+	{% endfor %}
+</body>
+</html>

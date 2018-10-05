@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<table border="0" cellpadding="0" cellspacing="0" class="month">
+<tr><th colspan="7" class="month">October 2018</th></tr>
+<tr><th class="sun">Sun</th><th class="mon">Mon</th><th class="tue">Tue</th><th class="wed">Wed</th><th class="thu">Thu</th><th class="fri">Fri</th><th class="sat">Sat</th></tr>
+{% for week in month %}
+	<tr>
+	{% for day in week %}
+		{% if day[0] == 0 %}
+			<td class="noday">&nbsp;</td>
+		{% else %}
+			<td class="{{ weekdays[day[1]] }}" style="text-align: center;"><button style="padding:20px; height: 20px; width: 20px; line-height: 0px; ">{{ day[0] }}</button></td>
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+</table>
+</html>
